@@ -1,0 +1,17 @@
+# Search engines and AI assistants (ChatGPT, Claude, Perplexity, Gemini, Apple)
+# may read the whole public site. Unapproved drafts and tooling stay out.
+User-agent: *
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: PerplexityBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /content/
+Disallow: /scripts/
+
+# Add once the site has a domain (and set SITE_URL in scripts/build_blog.py):
+# Sitemap: https://YOUR-DOMAIN/sitemap.xml

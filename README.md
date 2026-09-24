@@ -9,10 +9,18 @@ One-page site for Nick Gonzalez, Keller Williams, Utah. Plain HTML + CSS, no bui
 
 Open `index.html` in a browser to preview.
 
-## Adding a blog post
+## Blog
 
-1. Copy any file in `blog/`, rename it (e.g. `blog/my-new-post.html`), and edit the title, date, image, and text.
-2. Add a matching card at the top of the `.blog-grid` in `blog.html`. The first card is shown large as the featured post.
+Posts are written in Markdown in `content/posts/` and built into `blog/`, `blog.html`, and `llms.txt`:
+
+```
+python3 scripts/build_blog.py                 # build
+python3 scripts/build_blog.py --check FILE    # check length/format rules
+```
+
+Don't edit `blog.html` or `blog/*.html` by hand; they are regenerated.
+
+A scheduled routine drafts 10 posts every weekday, emails them for approval, and publishes approved posts. See `content/BLOG_ROUTINE.md`. Facts about Nick used in posts come only from `content/agent-profile.md`.
 
 ## Before going live
 
@@ -23,4 +31,6 @@ Open `index.html` in a browser to preview.
 - Connect the booking calendar: in Google Calendar, open your appointment schedule > Share > Website embed, copy the schedule ID from the link, and replace both `YOUR_SCHEDULE_ID` placeholders in `index.html`.
 - Require a phone number on bookings: in the appointment schedule's settings under **Booking form**, add a **Phone number** field and mark it required. Google always asks for name and email.
 - Connect the Instagram feed: create a free feed widget (e.g. Behold or LightWidget) linked to @nickgonzalezrealtor and paste its embed code into the `.ig-feed` block in `index.html`, replacing the placeholder.
+- Fill in `content/agent-profile.md` so "why work with Nick" posts can use real credentials.
+- Set `SITE_URL` in `scripts/build_blog.py` and the Sitemap line in `robots.txt` once the domain is live.
 - Point the contact form's `action` at a form service (e.g. Formspree or Netlify Forms) so submissions are delivered.
