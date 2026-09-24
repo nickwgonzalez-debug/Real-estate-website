@@ -4,9 +4,15 @@ One-page site for Nick Gonzalez, Keller Williams, Utah. Plain HTML + CSS, no bui
 
 - `index.html` — page content (hero, About, Featured Listings, Testimonials, Book a Consultation, Contact)
 - `team.html` — Meet the Team page
+- `blog.html` — Blog index; posts live in `blog/`
 - `styles.css` — styles, including responsive/mobile layout
 
 Open `index.html` in a browser to preview.
+
+## Adding a blog post
+
+1. Copy any file in `blog/`, rename it (e.g. `blog/my-new-post.html`), and edit the title, date, image, and text.
+2. Add a matching card at the top of the `.blog-grid` in `blog.html`. The first card is shown large as the featured post.
 
 ## Before going live
 
