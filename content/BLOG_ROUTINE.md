@@ -48,9 +48,13 @@ Nick Gonzalez (Realtor, Keller Williams, Utah). Nick can edit this file to chang
 4. For each approved draft: apply any requested edits, set `date` and `updated` to today, re-run
    `python3 scripts/build_blog.py --check <file>` and fix issues, then move it to
    `content/posts/<today>-<slug>.md`. If the slug already exists in `content/posts/`, change the slug.
-5. Record every decision in `status.json` (`approved`, `rejected`, `edited`, with date).
-6. Run `python3 scripts/build_blog.py`. Commit (`Publish N approved blog posts`) and push.
-7. If anything was published, send Nick one short email: subject `[Blog Published] N posts live`,
+5. Link back from older posts. For each newly published post, pick the 2 most related older posts
+   in `content/posts/` and add one natural sentence to each that links to the new post
+   (`[New Post Title](new-slug.html)`). Put it in the section where it fits best, not at the end.
+   Set `updated` to today on those older posts. Re-run `--check` on each edited post.
+6. Record every decision in `status.json` (`approved`, `rejected`, `edited`, with date).
+7. Run `python3 scripts/build_blog.py`. Commit (`Publish N approved blog posts`) and push.
+8. If anything was published, send Nick one short email: subject `[Blog Published] N posts live`,
    listing each title and its path.
 
 ## Step 2: Research (morning run only)
@@ -137,8 +141,16 @@ Run `python3 scripts/build_blog.py --check content/drafts/<today>/*.md` and fix 
   where relevant and accurate.
 - Every section must make sense if read alone. Repeat the subject instead of "this" or "it".
 - Use tables for comparisons (e.g., bridge loan vs. HELOC vs. sell first).
-- Link to 1-2 related posts (`[title](slug.html)`) and end with a line pointing to
-  `[book a free consultation](../index.html#book)` or `[send Nick a message](../index.html#contact)`.
+- Interlinking (enforced by `--check`): link to at least 3 other posts inside the body text, using the
+  exact post title or a natural phrase as the link text: `[How Do I Buy My First Home in Utah?](first-time-homebuyer-guide-utah.html)`.
+  Link where the topic comes up, not in a list at the end. Prefer published posts in `content/posts/`;
+  linking to another draft in today's batch is fine, because the build shows it as plain text until that draft is approved.
+- End with a line pointing to `[book a free consultation](../index.html#book)` or
+  `[send Nick a message](../index.html#contact)`.
+- The build adds the rest automatically: a "Related Questions" list (5 most related posts, updated every
+  time a post is published, so older posts link to newer ones), a topic page per category
+  (`blog/topic-*.html`), breadcrumbs to the topic, and topic groups in `llms.txt`. Keep category names
+  consistent (use the five categories above) so topic pages stay organized.
 - Voice: friendly, plain, confident, local. First person as Nick is fine.
 
 ### Accuracy and compliance (must follow)

@@ -62,15 +62,27 @@ LIMITS = {
     "section_words": (60, 300),     # each section is a self-contained chunk
     "faqs": (3, 5),
     "faq_answer_words": (25, 70),
+    "internal_links": 3,            # links to other blog posts in the body (fewer if fewer exist)
 }
+
+# Slugs of published posts. Set by main()/check(); links to posts not in this set render as plain text.
+PUBLISHED_SLUGS = None
+UNRESOLVED_LINKS = []
+POST_LINK = re.compile(r"\]\(([a-z0-9-]+)\.html\)")
+
+
+def topic_slug(category):
+    return "topic-" + re.sub(r"[^a-z0-9]+", "-", category.lower()).strip("-")
 
 
 def words(s):
     return len(re.findall(r"[A-Za-z0-9$%][\w'$%.,-]*", strip_md(s)))
 
 
-def check_post(p):
-    """Return a list of rule violations for a parsed post."""
+def check_post(p, linkable=None):
+    """Return a list of rule violations for a parsed post.
+
+    linkable: slugs this post may link to (published posts plus drafts in the same batch)."""
     issues = []
 
     def rng(label, key, val):
@@ -104,6 +116,17 @@ def check_post(p):
             issues.append(f"mention '{place.title()}' at least once")
     if "riverton" not in text and "bluffdale" not in text:
         issues.append("mention Riverton or Bluffdale at least once")
+    if linkable is not None:
+        targets = POST_LINK.findall(p["body_md"])
+        for t in sorted(set(targets)):
+            if t not in linkable:
+                issues.append(f"link to '{t}.html' doesn't match any published post or draft in this batch")
+        others = linkable - {p["slug"]}
+        need = min(LIMITS["internal_links"], len(others))
+        found = len({t for t in targets if t in others})
+        if found < need:
+            issues.append(f"internal links to other posts: {found} (target at least {need}); "
+                          "link related posts in the text, e.g. [title](slug.html)")
     for phrase in ("best realtor in", "#1 realtor", "top realtor", "number one realtor"):
         for m in re.finditer(re.escape(phrase), p["body_md"].lower()):
             issues.append(f"body contains '{phrase}': only allowed as a question/title, never as a claim")
@@ -140,6 +163,10 @@ def inline(s):
 
     def link(m):
         label, url = m.group(1), m.group(2)
+        target = re.fullmatch(r"([a-z0-9-]+)\.html", url)
+        if target and PUBLISHED_SLUGS is not None and target.group(1) not in PUBLISHED_SLUGS:
+            UNRESOLVED_LINKS.append(url)
+            return label
         ext = url.startswith("http")
         attrs = ' target="_blank" rel="noopener"' if ext else ""
         return f'<a href="{html.escape(url)}"{attrs}>{label}</a>'
@@ -250,6 +277,28 @@ def post_url(slug, absolute=False):
     return f"{SITE_URL.rstrip('/')}/{rel}" if (absolute and SITE_URL) else rel
 
 
+STOPWORDS = set("a an and are as at be by can do does for from how i in is it my of on or should the to what when where which who why will with you your utah riverton bluffdale salt lake county".split())
+
+
+def topic_words(p):
+    text = " ".join([p["title"], p.get("keywords", ""), p["description"]]).lower()
+    return {w for w in re.findall(r"[a-z]{3,}", text) if w not in STOPWORDS}
+
+
+def related_posts(p, posts, n=5):
+    """Most related posts first: shared category, shared topic words, then links between them."""
+    mine = topic_words(p)
+    links_out = set(POST_LINK.findall(p["body_md"]))
+
+    def score(r):
+        sc = 3 if r["category"] == p["category"] else 0
+        sc += len(mine & topic_words(r))
+        if r["slug"] in links_out or p["slug"] in POST_LINK.findall(r["body_md"]):
+            sc += 2
+        return (sc, r["date"])
+    return sorted((r for r in posts if r is not p), key=score, reverse=True)[:n]
+
+
 # ---------- Templates ----------
 
 def head(title, desc, css_prefix, canonical=None, extra=""):
@@ -356,6 +405,8 @@ def render_post(p, image, related):
         "publisher": {"@type": "Organization", "name": f"{AUTHOR['name']}, {AUTHOR['brokerage']}"},
         "about": [{"@type": "Place", "name": a} for a in p["areas"]],
         "inLanguage": "en-US",
+        "isPartOf": {"@type": "CollectionPage", "name": f"{p['category']} questions",
+                     "url": f"{SITE_URL.rstrip('/')}/blog/{topic_slug(p['category'])}.html" if SITE_URL else f"{topic_slug(p['category'])}.html"},
     }]
     if abs_url:
         graph[0]["mainEntityOfPage"] = abs_url
@@ -366,7 +417,8 @@ def render_post(p, image, related):
             "mainEntity": [{"@type": "Question", "name": q,
                             "acceptedAnswer": {"@type": "Answer", "text": strip_md(a)}} for q, a in faqs],
         })
-    crumbs = [("Home", "index.html"), ("Blog", "blog.html"), (p["title"], f"blog/{p['slug']}.html")]
+    crumbs = [("Home", "index.html"), ("Blog", "blog.html"),
+              (p["category"], f"blog/{topic_slug(p['category'])}.html"), (p["title"], f"blog/{p['slug']}.html")]
     graph.append({
         "@type": "BreadcrumbList",
         "itemListElement": [{"@type": "ListItem", "position": n + 1, "name": name,
@@ -391,14 +443,15 @@ def render_post(p, image, related):
     if related:
         rel = ('\n        <section class="related-posts">\n          <h2>Related Questions</h2>\n          <ul>'
                + "".join(f'<li><a href="{r["slug"]}.html">{html.escape(r["title"])}</a></li>' for r in related)
-               + "</ul>\n        </section>")
+               + f'</ul>\n          <p><a class="read-more" href="{topic_slug(p["category"])}.html">All {html.escape(p["category"])} questions &rarr;</a></p>'
+               + "\n        </section>")
 
     return (head(f"{p['title']} | Nick Gonzalez, Keller Williams", p["description"], "../", abs_url, schema)
             + nav("../") + f'''
   <article class="post">
     <header class="post-header">
       <div class="container post-container">
-        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a> / <a href="../blog.html">Blog</a> / <span>{html.escape(p['category'])}</span></nav>
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a> / <a href="../blog.html">Blog</a> / <a href="{topic_slug(p['category'])}.html">{html.escape(p['category'])}</a></nav>
         <p class="blog-meta"><span class="blog-tag">{html.escape(p['category'])}</span> <time datetime="{p['date']}">{fmt_date(p['date'])}</time> &middot; {mins} min read</p>
         <h1>{html.escape(p['title'])}</h1>
         <p class="post-author">By <strong>Nick Gonzalez</strong>, Realtor with Keller Williams &middot; Updated <time datetime="{p['updated']}">{fmt_date(p['updated'])}</time></p>
@@ -424,19 +477,77 @@ def render_post(p, image, related):
 ''' + footer("../"))
 
 
-def render_index(posts, images):
-    cards = []
-    for n, p in enumerate(posts):
-        cls = "blog-card blog-card-featured" if n == 0 else "blog-card"
-        cards.append(f'''        <article class="{cls}">
-          <a href="blog/{p['slug']}.html" class="blog-card-image" style="background-image: url('{images[p['slug']]}');" aria-hidden="true" tabindex="-1"></a>
+def card(p, image, prefix, featured=False):
+    cls = "blog-card blog-card-featured" if featured else "blog-card"
+    url = f"{prefix}{p['slug']}.html"
+    return f'''        <article class="{cls}">
+          <a href="{url}" class="blog-card-image" style="background-image: url('{image}');" aria-hidden="true" tabindex="-1"></a>
           <div class="blog-card-body">
-            <p class="blog-meta"><span class="blog-tag">{html.escape(p['category'])}</span> <time datetime="{p['date']}">{fmt_date(p['date'])}</time> &middot; {read_minutes(p['body_md'])} min read</p>
-            <h2><a href="blog/{p['slug']}.html">{html.escape(p['title'])}</a></h2>
+            <p class="blog-meta"><a class="blog-tag" href="{prefix}{topic_slug(p['category'])}.html">{html.escape(p['category'])}</a> <time datetime="{p['date']}">{fmt_date(p['date'])}</time> &middot; {read_minutes(p['body_md'])} min read</p>
+            <h2><a href="{url}">{html.escape(p['title'])}</a></h2>
             <p>{html.escape(p['description'])}</p>
-            <a href="blog/{p['slug']}.html" class="read-more">Read more &rarr;</a>
+            <a href="{url}" class="read-more">Read more &rarr;</a>
           </div>
-        </article>''')
+        </article>'''
+
+
+def categories(posts):
+    counts = {}
+    for p in posts:
+        counts[p["category"]] = counts.get(p["category"], 0) + 1
+    return sorted(counts.items())
+
+
+def topic_nav(posts, prefix, current=None):
+    links = [f'<a href="{"../" if prefix else ""}blog.html" class="topic-chip{" is-active" if current is None else ""}">All</a>']
+    for cat, n in categories(posts):
+        active = " is-active" if cat == current else ""
+        links.append(f'<a href="{prefix}{topic_slug(cat)}.html" class="topic-chip{active}">{html.escape(cat)} <span>{n}</span></a>')
+    return '      <nav class="topic-nav" aria-label="Blog topics">' + "".join(links) + "</nav>"
+
+
+def render_topic(category, posts, all_posts, images):
+    url = f"{SITE_URL.rstrip('/')}/blog/{topic_slug(category)}.html" if SITE_URL else None
+    schema = jsonld({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": f"{category} Questions: Riverton, Bluffdale & Salt Lake County",
+        "about": [{"@type": "Place", "name": a} for a in AREAS],
+        "author": person(),
+        "hasPart": [{"@type": "BlogPosting", "headline": p["title"], "url": post_url(p["slug"], absolute=True)} for p in posts],
+    })
+    cards = "\n".join(card(p, images[p["slug"]], "") for p in posts)
+    faq_list = "".join(f'<li><a href="{p["slug"]}.html">{html.escape(p["title"])}</a></li>' for p in posts)
+    return (head(f"{category} Questions | Riverton & Bluffdale, Utah | Nick Gonzalez",
+                 f"Every {category.lower()} question answered for Riverton, Bluffdale, and Salt Lake County, Utah, by Nick Gonzalez, Keller Williams.",
+                 "../", url, schema)
+            + nav("../") + f'''
+  <section class="page-banner">
+    <div class="container">
+      <p class="eyebrow">Blog Topic</p>
+      <h1>{html.escape(category)} Questions</h1>
+      <p class="page-banner-sub">Answers for {html.escape(category.lower())} in Riverton, Bluffdale, and across Salt Lake County, Utah.</p>
+    </div>
+  </section>
+
+  <!-- Generated by scripts/build_blog.py. Do not edit by hand. -->
+  <section class="section">
+    <div class="container">
+{topic_nav(all_posts, "", category)}
+      <div class="topic-index">
+        <h2>All {html.escape(category)} questions</h2>
+        <ul>{faq_list}</ul>
+      </div>
+      <div class="blog-grid">
+{cards}
+      </div>
+    </div>
+  </section>
+''' + footer("../"))
+
+
+def render_index(posts, images):
+    cards = [card(p, images[p["slug"]], "blog/", featured=(n == 0)) for n, p in enumerate(posts)]
     schema = jsonld({
         "@context": "https://schema.org",
         "@type": "Blog",
@@ -461,6 +572,7 @@ def render_index(posts, images):
   <!-- Posts: generated by scripts/build_blog.py from content/posts/. Do not edit by hand. -->
   <section class="section">
     <div class="container">
+{topic_nav(posts, "blog/")}
       <div class="blog-grid">
 {chr(10).join(cards)}
       </div>
@@ -487,8 +599,12 @@ def render_llms(posts):
         "## Blog articles",
         "",
     ]
-    for p in posts:
-        lines.append(f"- [{p['title']}]({base}{post_url(p['slug'])}): {p['summary']}")
+    for cat, _ in categories(posts):
+        lines += [f"### [{cat}]({base}blog/{topic_slug(cat)}.html)", ""]
+        for p in posts:
+            if p["category"] == cat:
+                lines.append(f"- [{p['title']}]({base}{post_url(p['slug'])}): {p['summary']}")
+        lines.append("")
     lines += ["", "## Contact", "", f"- Instagram: {AUTHOR['instagram']}",
               f"- Book a consultation: {base}index.html#book", ""]
     return "\n".join(lines)
@@ -497,16 +613,22 @@ def render_llms(posts):
 def render_sitemap(posts):
     base = SITE_URL.rstrip("/")
     urls = [(f"{base}/index.html", None), (f"{base}/team.html", None), (f"{base}/blog.html", posts[0]["updated"] if posts else None)]
+    urls += [(f"{base}/blog/{topic_slug(c)}.html", max(p["updated"] for p in posts if p["category"] == c)) for c, _ in categories(posts)]
     urls += [(post_url(p["slug"], absolute=True), p["updated"]) for p in posts]
     items = "".join(f"  <url><loc>{u}</loc>{f'<lastmod>{d}</lastmod>' if d else ''}</url>\n" for u, d in urls)
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{items}</urlset>\n'
 
 
+def published_slugs():
+    return {parse_post(os.path.join(POSTS_DIR, f))["slug"] for f in os.listdir(POSTS_DIR) if f.endswith(".md")}
+
+
 def check(paths):
     failed = 0
-    for path in paths:
-        p = parse_post(path)
-        issues = check_post(p)
+    batch = [parse_post(path) for path in paths]
+    linkable = published_slugs() | {p["slug"] for p in batch}
+    for path, p in zip(paths, batch):
+        issues = check_post(p, linkable)
         status = "OK" if not issues else f"{len(issues)} issue(s)"
         print(f"{os.path.relpath(path, ROOT)}: {status} ({words(p['body_md']) + words(p['summary'])} words)")
         for i in issues:
@@ -524,6 +646,8 @@ def main():
     if dupes:
         raise SystemExit(f"Duplicate slugs: {', '.join(sorted(dupes))}")
     posts.sort(key=lambda p: (p["date"], p["title"]), reverse=True)
+    global PUBLISHED_SLUGS
+    PUBLISHED_SLUGS = set(slugs)
 
     images = {}
     for n, p in enumerate(sorted(posts, key=lambda p: p["slug"])):
@@ -531,11 +655,16 @@ def main():
 
     os.makedirs(BLOG_DIR, exist_ok=True)
     for p in posts:
-        related = [r for r in posts if r is not p and r["category"] == p["category"]][:3]
-        if len(related) < 3:
-            related += [r for r in posts if r is not p and r not in related][:3 - len(related)]
+        related = related_posts(p, posts)
         with open(os.path.join(BLOG_DIR, f"{p['slug']}.html"), "w", encoding="utf-8") as f:
             f.write(render_post(p, images[p["slug"]], related))
+
+    for f in os.listdir(BLOG_DIR):
+        if f.startswith("topic-"):
+            os.remove(os.path.join(BLOG_DIR, f))
+    for cat, _ in categories(posts):
+        with open(os.path.join(BLOG_DIR, f"{topic_slug(cat)}.html"), "w", encoding="utf-8") as f:
+            f.write(render_topic(cat, [p for p in posts if p["category"] == cat], posts, images))
 
     with open(os.path.join(ROOT, "blog.html"), "w", encoding="utf-8") as f:
         f.write(render_index(posts, images))
@@ -545,6 +674,8 @@ def main():
         with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8") as f:
             f.write(render_sitemap(posts))
 
+    for url in sorted(set(UNRESOLVED_LINKS)):
+        print(f"note: link to {url} shown as plain text (post not published yet); it becomes a link once published")
     print(f"Built {len(posts)} posts -> blog/, blog.html, llms.txt" + (", sitemap.xml" if SITE_URL else " (set SITE_URL for sitemap.xml)"))
 
 

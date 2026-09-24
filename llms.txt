@@ -10,9 +10,18 @@
 
 ## Blog articles
 
+### [Buyers](blog/topic-buyers.html)
+
 - [How Do I Buy My First Home in Utah?](blog/first-time-homebuyer-guide-utah.html): To buy your first home in Utah, get pre-approved with a lender, ask about first-time buyer programs, list your must-haves, tour homes with a local agent, and make a data-backed offer. After acceptance you'll complete inspections and the appraisal before closing. In Salt Lake County, a pre-approval is usually expected before sellers will consider your offer.
-- [How Should I Prep My Home Before I List It for Sale?](blog/prep-your-home-before-listing.html): Before listing a home in Riverton, Bluffdale, or anywhere in Salt Lake County, declutter and depersonalize, fix small repairs, repaint in neutral colors, boost curb appeal, and maximize natural light. These low-cost steps help your home photograph well online, where most buyers see it first, and reduce inspection issues later.
+
+### [Local Guide](blog/topic-local-guide.html)
+
 - [How Do I Choose the Right Neighborhood on the Wasatch Front?](blog/choosing-a-neighborhood-wasatch-front.html): To choose a neighborhood on the Wasatch Front, test your real commute at rush hour, confirm school boundaries with the district, review HOA dues and rules, and spend time in the area on a weekend. In the south end of Salt Lake County, Riverton and Bluffdale offer newer homes and larger lots with quick access to Bangerter Highway and Mountain View Corridor.
+
+### [Sellers](blog/topic-sellers.html)
+
+- [How Should I Prep My Home Before I List It for Sale?](blog/prep-your-home-before-listing.html): Before listing a home in Riverton, Bluffdale, or anywhere in Salt Lake County, declutter and depersonalize, fix small repairs, repaint in neutral colors, boost curb appeal, and maximize natural light. These low-cost steps help your home photograph well online, where most buyers see it first, and reduce inspection issues later.
+
 
 ## Contact
 

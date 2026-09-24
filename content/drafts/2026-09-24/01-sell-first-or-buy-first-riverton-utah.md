@@ -29,7 +29,7 @@ A rent-back, also called a seller leaseback, lets you stay in your home for an a
 
 ## When does it make sense to buy first?
 
-Buying first makes sense when you have strong income or savings and the home you want is rare, such as a Bluffdale property with acreage or a single-level home in a specific Riverton neighborhood. Buying first lets you move once, on your schedule, and prepare your current home for sale after it's empty, which often helps it photograph and show better. The risk is carrying two housing payments if your current Salt Lake County home takes longer to sell than expected. Talk with a lender before you shop so you know whether you qualify with both payments counted.
+Buying first makes sense when you have strong income or savings and the home you want is rare, such as a Bluffdale property with acreage or a single-level home in a specific Riverton neighborhood. Buying first lets you move once, on your schedule, and prepare your current home for sale after it's empty, which often helps it photograph and show better. The risk is carrying two housing payments if your current Salt Lake County home takes longer to sell than expected. Talk with a lender before you shop so you know whether you qualify with both payments counted; the pre-approval steps in [How Do I Buy My First Home in Utah?](first-time-homebuyer-guide-utah.html) apply to move-up buyers too.
 
 ## How do bridge loans and HELOCs help me buy before I sell?
 
@@ -46,11 +46,11 @@ Rates, fees, and qualification rules vary by lender, so compare quotes from at l
 
 ## Will sellers in Salt Lake County accept a home sale contingency?
 
-Sellers in Riverton and Bluffdale may accept a home sale contingency when a home has been on the market for a while or when few buyers are competing for it. When several buyers want the same Salt Lake County home, an offer that depends on selling another house usually loses to one that doesn't. If you plan to use a contingency, make it stronger by listing your current home first, pricing it to sell, and offering a short contingency period. Your agent can check how long similar homes are sitting to judge whether a contingency is realistic.
+Sellers in Riverton and Bluffdale may accept a home sale contingency when a home has been on the market for a while or when few buyers are competing for it. When several buyers want the same Salt Lake County home, an offer that depends on selling another house usually loses to one that doesn't. If you plan to use a contingency, make it stronger by listing your current home first, pricing it to sell, and offering a short contingency period. Your agent can check how long similar homes are sitting to judge whether a contingency is realistic. If you're still deciding where to buy, [How Do I Choose the Right Neighborhood on the Wasatch Front?](choosing-a-neighborhood-wasatch-front.html) covers commute, schools, and HOAs.
 
 ## How do I decide which path is right for me?
 
-Start with three numbers: your estimated equity after selling costs, the monthly payment you can carry, and how quickly homes like your next one are selling in Riverton or Bluffdale right now. If your equity covers the down payment and homes are moving quickly, selling first with a rent-back is usually strongest. If you can comfortably carry two payments, buying first gives you more control. A local agent and a Utah lender can run both scenarios side by side so you can see the cost of each before you decide. For more on timing, see [How Should I Prep My Home Before I List It for Sale?](prep-your-home-before-listing.html), or [book a free consultation](../index.html#book) to map out your move.
+Start with three numbers: your estimated equity after selling costs, the monthly payment you can carry, and how quickly homes like your next one are selling in Riverton or Bluffdale right now. If your equity covers the down payment and homes are moving quickly, selling first with a rent-back is usually strongest. If you can comfortably carry two payments, buying first gives you more control. A local agent and a Utah lender can run both scenarios side by side so you can see the cost of each before you decide. For more on timing, see [How Should I Prep My Home Before I List It for Sale?](prep-your-home-before-listing.html), learn [how to choose a Realtor in Riverton](how-to-choose-a-realtor-riverton-utah.html), or [book a free consultation](../index.html#book) to map out your move.
 
 ## Frequently Asked Questions
 
