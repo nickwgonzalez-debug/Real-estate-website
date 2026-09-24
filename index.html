@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nick Gonzalez | Keller Williams Realtor in Utah</title>
+  <meta name="description" content="Nick Gonzalez is a Keller Williams real estate agent helping buyers and sellers across Utah find their next home.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#home" class="logo">Nick Gonzalez<span>Keller Williams</span></a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle menu">
+      <label for="nav-toggle" class="nav-toggle-label" aria-hidden="true"><span></span></label>
+      <nav class="nav-links" aria-label="Main">
+        <a href="#about">About</a>
+        <a href="#listings">Listings</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact" class="btn btn-small">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="hero-overlay"></div>
+    <div class="container hero-content">
+      <p class="eyebrow">Keller Williams &middot; Utah</p>
+      <h1>Nick Gonzalez</h1>
+      <p class="hero-tagline">Helping Utah families buy, sell, and invest with confidence &mdash; from the Wasatch Front to St. George.</p>
+      <div class="hero-actions">
+        <a href="#listings" class="btn">View Listings</a>
+        <a href="#contact" class="btn btn-outline">Let's Talk</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section">
+    <div class="container about">
+      <div class="about-photo">
+        <!-- Replace with your headshot: <img src="images/nick.jpg" alt="Nick Gonzalez"> -->
+        <div class="photo-placeholder" role="img" aria-label="Photo of Nick Gonzalez">NG</div>
+      </div>
+      <div class="about-text">
+        <p class="eyebrow">About Me</p>
+        <h2>Your Local Guide to Utah Real Estate</h2>
+        <p>I'm Nick Gonzalez, a real estate agent with Keller Williams serving communities across Utah. Whether you're buying your first home, upsizing for a growing family, or selling to start your next chapter, I'm here to make the process clear, smooth, and stress-free.</p>
+        <p>I combine deep local market knowledge with the resources of the world's largest real estate franchise. That means sharp pricing, strong negotiation, and marketing that gets your home in front of the right buyers.</p>
+        <ul class="stats">
+          <li><strong>100+</strong><span>Homes Sold</span></li>
+          <li><strong>5&#9733;</strong><span>Client Rating</span></li>
+          <li><strong>24/7</strong><span>Responsive</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Listings -->
+  <section id="listings" class="section section-alt">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Featured Listings</p>
+        <h2>Homes I'm Excited About</h2>
+      </div>
+      <div class="listings-grid">
+
+        <article class="listing-card">
+          <div class="listing-image" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=70');">
+            <span class="badge">For Sale</span>
+          </div>
+          <div class="listing-body">
+            <p class="price">$749,900</p>
+            <h3>Modern Mountain Retreat</h3>
+            <p class="location">Draper, UT</p>
+            <ul class="specs">
+              <li>4 Beds</li>
+              <li>3 Baths</li>
+              <li>3,200 sq ft</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="listing-card">
+          <div class="listing-image" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=70');">
+            <span class="badge">New</span>
+          </div>
+          <div class="listing-body">
+            <p class="price">$549,000</p>
+            <h3>Family Home Near Trails</h3>
+            <p class="location">Lehi, UT</p>
+            <ul class="specs">
+              <li>5 Beds</li>
+              <li>3 Baths</li>
+              <li>2,850 sq ft</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="listing-card">
+          <div class="listing-image" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=70');">
+            <span class="badge badge-pending">Pending</span>
+          </div>
+          <div class="listing-body">
+            <p class="price">$1,195,000</p>
+            <h3>Luxury Canyon View Estate</h3>
+            <p class="location">Park City, UT</p>
+            <ul class="specs">
+              <li>5 Beds</li>
+              <li>4.5 Baths</li>
+              <li>4,600 sq ft</li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="eyebrow">Testimonials</p>
+        <h2>What Buyers &amp; Sellers Say</h2>
+      </div>
+      <div class="testimonials-grid">
+
+        <figure class="testimonial">
+          <div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <blockquote>&ldquo;Nick made buying our first home so easy. He explained every step, answered every late-night text, and found us a place we love in Lehi.&rdquo;</blockquote>
+          <figcaption><strong>Sarah &amp; James M.</strong><span>First-Time Buyers</span></figcaption>
+        </figure>
+
+        <figure class="testimonial">
+          <div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <blockquote>&ldquo;We had multiple offers within a week and closed above asking. Nick's pricing strategy and marketing were spot on.&rdquo;</blockquote>
+          <figcaption><strong>Maria R.</strong><span>Home Seller, Sandy</span></figcaption>
+        </figure>
+
+        <figure class="testimonial">
+          <div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <blockquote>&ldquo;Relocating from out of state was intimidating, but Nick handled everything. Professional, honest, and genuinely cares about his clients.&rdquo;</blockquote>
+          <figcaption><strong>David K.</strong><span>Relocation Buyer</span></figcaption>
+        </figure>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section section-dark">
+    <div class="container contact">
+      <div class="contact-info">
+        <p class="eyebrow">Get In Touch</p>
+        <h2>Ready to Make Your Move?</h2>
+        <p>Whether you're buying, selling, or just curious what your home is worth, send me a message and I'll get back to you within 24 hours.</p>
+        <ul class="contact-details">
+          <li><span>Phone</span><a href="tel:+18015550123">(801) 555-0123</a></li>
+          <li><span>Email</span><a href="mailto:nick@example.com">nick@example.com</a></li>
+          <li><span>Brokerage</span>Keller Williams, Utah</li>
+        </ul>
+      </div>
+
+      <!-- To receive submissions, point "action" at a form service (e.g. Formspree, Netlify Forms) -->
+      <form class="contact-form" action="#" method="post">
+        <div class="form-row">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your full name" autocomplete="name" required>
+        </div>
+        <div class="form-grid">
+          <div class="form-row">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          </div>
+          <div class="form-row">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" placeholder="(801) 555-0123" autocomplete="tel">
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="Tell me what you're looking for..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-block">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 Nick Gonzalez &middot; Keller Williams Realty &middot; Utah</p>
+      <p class="footer-note">Each Keller Williams office is independently owned and operated. Equal Housing Opportunity.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
