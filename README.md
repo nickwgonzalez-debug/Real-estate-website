@@ -13,4 +13,5 @@ Open `index.html` in a browser to preview.
 - Swap the "NG" placeholder in About for a headshot (see the comment in `index.html`).
 - Update the listing photos, prices, and details, and the testimonials.
 - Connect the booking calendar: in Google Calendar, open your appointment schedule > Share > Website embed, copy the schedule ID from the link, and replace both `YOUR_SCHEDULE_ID` placeholders in `index.html`.
+- Require a phone number on bookings: in the appointment schedule's settings under **Booking form**, add a **Phone number** field and mark it required. Google always asks for name and email.
 - Point the contact form's `action` at a form service (e.g. Formspree or Netlify Forms) so submissions are delivered.

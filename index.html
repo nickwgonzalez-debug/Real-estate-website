@@ -168,6 +168,8 @@
           Google Calendar appointment schedule embed.
           In Google Calendar: open your appointment schedule > Share > Website embed > Inline,
           then replace YOUR_SCHEDULE_ID below (in both the iframe and the button link).
+          Booking form fields are set in Google Calendar, not here: under "Booking form",
+          add a Phone number field and mark it required (name and email are always required).
         -->
         <iframe
           class="calendar-embed"
@@ -199,17 +201,17 @@
       <!-- To receive submissions, point "action" at a form service (e.g. Formspree, Netlify Forms) -->
       <form class="contact-form" action="#" method="post">
         <div class="form-row">
-          <label for="name">Name</label>
+          <label for="name">Name <span class="req" aria-hidden="true">*</span></label>
           <input type="text" id="name" name="name" placeholder="Your full name" autocomplete="name" required>
         </div>
         <div class="form-grid">
           <div class="form-row">
-            <label for="email">Email</label>
+            <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
             <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
           </div>
           <div class="form-row">
-            <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" placeholder="(801) 555-0123" autocomplete="tel">
+            <label for="phone">Phone <span class="req" aria-hidden="true">*</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="(801) 555-0123" autocomplete="tel" required>
           </div>
         </div>
         <div class="form-row">
