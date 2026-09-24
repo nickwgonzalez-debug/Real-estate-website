@@ -16,4 +16,5 @@ Open `index.html` in a browser to preview.
 - Update the listing photos, prices, and details, and the testimonials.
 - Connect the booking calendar: in Google Calendar, open your appointment schedule > Share > Website embed, copy the schedule ID from the link, and replace both `YOUR_SCHEDULE_ID` placeholders in `index.html`.
 - Require a phone number on bookings: in the appointment schedule's settings under **Booking form**, add a **Phone number** field and mark it required. Google always asks for name and email.
+- Connect the Instagram feed: create a free feed widget (e.g. Behold or LightWidget) linked to @nickgonzalezrealtor and paste its embed code into the `.ig-feed` block in `index.html`, replacing the placeholder.
 - Point the contact form's `action` at a form service (e.g. Formspree or Netlify Forms) so submissions are delivered.

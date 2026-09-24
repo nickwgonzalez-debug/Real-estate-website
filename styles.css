@@ -413,6 +413,51 @@ img {
   color: var(--muted);
 }
 
+/* ===== Instagram ===== */
+.ig-icon {
+  width: 1.1em;
+  height: 1.1em;
+  vertical-align: -0.2em;
+}
+
+.ig-feed {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.ig-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 260px;
+  padding: 32px;
+  border: 2px dashed #d6d2cc;
+  border-radius: var(--radius);
+  color: var(--muted);
+  text-align: center;
+}
+
+.ig-placeholder .ig-icon {
+  width: 40px;
+  height: 40px;
+  color: var(--red);
+}
+
+.ig-placeholder p {
+  margin: 0;
+}
+
+.ig-follow {
+  text-align: center;
+  margin-top: 32px;
+}
+
+.ig-follow .ig-icon {
+  margin-right: 6px;
+}
+
 /* ===== Booking Calendar ===== */
 .section-sub {
   color: var(--muted);
@@ -665,6 +710,20 @@ img {
 
 .site-footer p {
   margin: 0.25em 0;
+}
+
+.footer-social a {
+  color: #d5d9de;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-social a:hover {
+  color: #fff;
+}
+
+.footer-social {
+  margin-bottom: 0.75em !important;
 }
 
 .footer-note {
