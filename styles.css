@@ -413,6 +413,39 @@ img {
   color: var(--muted);
 }
 
+/* ===== Booking Calendar ===== */
+.section-sub {
+  color: var(--muted);
+}
+
+.calendar-card {
+  max-width: 960px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.calendar-embed {
+  display: block;
+  width: 100%;
+  height: 680px;
+  border: 0;
+}
+
+.calendar-fallback {
+  text-align: center;
+  margin: 20px 0 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.calendar-fallback a {
+  color: var(--red);
+  font-weight: 600;
+}
+
 /* ===== Contact ===== */
 .contact {
   display: grid;
@@ -621,6 +654,10 @@ img {
 
   .contact-form {
     padding: 24px;
+  }
+
+  .calendar-embed {
+    height: 760px;
   }
 
   .hero {
