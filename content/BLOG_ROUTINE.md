@@ -25,6 +25,7 @@ Nick Gonzalez (Realtor, Keller Williams, Utah). Nick can edit this file to chang
 | `content/drafts/YYYY-MM-DD/NN-slug.md` | Drafts awaiting approval (not on the website) |
 | `content/drafts/YYYY-MM-DD/status.json` | Approval status of that day's drafts |
 | `content/posts/YYYY-MM-DD-slug.md` | Approved posts (source for the website) |
+| `scripts/approval_email.py` | Formats the approval email (HTML + text) for a drafts folder |
 | `scripts/build_blog.py` | Builds `blog/`, `blog.html`, `llms.txt`, `sitemap.xml`; `--check` checks the length and format rules |
 
 ## Step 0: Setup
@@ -164,7 +165,14 @@ Run `python3 scripts/build_blog.py --check content/drafts/<today>/*.md` and fix 
 
 ## Step 6: Email drafts to Nick
 
-Send one email to Nick:
+Build the email with the script, then send it with Gmail (`htmlBody` = `approval_email.html`,
+`body` = `approval_email.txt`):
+
+```
+python3 scripts/approval_email.py content/drafts/<today> [--note "questions for Nick, if any"]
+```
+
+The script prints the subject line. What it produces:
 
 - Subject: `[Blog Approval] 10 drafts for <Weekday, Month D, YYYY>`
 - Body, in this order:
